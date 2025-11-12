@@ -17,7 +17,7 @@ class WebSocketManager {
     document.getElementById('username').textContent = this.username;
     document.getElementById('room-id').textContent = this.roomId;
 
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://realtimecanvas-backend.onrender.com');
 
     this.socket.emit('join-room', {
       roomId: this.roomId,
