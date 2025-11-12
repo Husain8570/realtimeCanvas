@@ -1,0 +1,17 @@
+{
+  "name": "collaborative-drawing-app",
+  "version": "1.0.0",
+  "description": "Real-time multi-user collaborative drawing application",
+  "main": "server/server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["collaborative", "drawing", "canvas", "websocket", "real-time"],
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}

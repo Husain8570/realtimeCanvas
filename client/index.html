@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collaborative Drawing App</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Join Form Styles */
+    .join-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #e0e0e0;
+      z-index: 3000;
+    }
+
+    .join-screen h1 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: #4a9eff;
+    }
+
+    #join-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 320px;
+    }
+
+    #join-form input {
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #252525;
+      color: #e0e0e0;
+      font-size: 14px;
+    }
+
+    #join-form input:focus {
+      outline: none;
+      border-color: #4a9eff;
+    }
+
+    #join-form button {
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: #4a9eff;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    #join-form button:hover {
+      background: #3a8eef;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔹 Join Form -->
+  <div id="join-screen" class="join-screen">
+    <h1>Collaborative Drawing App</h1>
+    <form id="join-form">
+      <input type="text" id="username-input" placeholder="Enter your name" required />
+      <input type="text" id="room-input" placeholder="Enter room name" required />
+      <button type="submit">Join Room</button>
+    </form>
+  </div>
+
+  <!-- 🔹 Main App -->
+  <div class="container" id="app-container" style="display:none;">
+    <header class="header">
+      <div class="header-left">
+        <h1>Collaborative Drawing</h1>
+        <div class="room-info">
+          <span>Room: <span id="room-id">default</span></span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="user-info">
+          <span id="username">User</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content">
+      <aside class="toolbar">
+        <div class="tool-section">
+          <h3>Tools</h3>
+          <button class="tool-btn active" data-tool="brush" title="Brush (B)">Brush</button>
+          <button class="tool-btn" data-tool="eraser" title="Eraser (E)">Eraser</button>
+          <button class="tool-btn" data-tool="line" title="Line (L)">Line</button>
+          <button class="tool-btn" data-tool="rectangle" title="Rectangle (R)">Rectangle</button>
+          <button class="tool-btn" data-tool="circle" title="Circle (C)">Circle</button>
+          <button class="tool-btn" data-tool="text" title="Text (T)">Text</button>
+          <button class="tool-btn" data-tool="image" title="Image (I)">Image</button>
+        </div>
+
+        <div class="tool-section">
+          <h3>Color</h3>
+          <input type="color" id="color-picker" value="#ffffff">
+          <div class="color-presets">
+            <button class="color-preset" data-color="#ffffff" style="background: #ffffff;"></button>
+            <button class="color-preset" data-color="#000000" style="background: #000000;"></button>
+            <button class="color-preset" data-color="#ff0000" style="background: #ff0000;"></button>
+            <button class="color-preset" data-color="#00ff00" style="background: #00ff00;"></button>
+            <button class="color-preset" data-color="#0000ff" style="background: #0000ff;"></button>
+            <button class="color-preset" data-color="#ffff00" style="background: #ffff00;"></button>
+            <button class="color-preset" data-color="#ff00ff" style="background: #ff00ff;"></button>
+            <button class="color-preset" data-color="#00ffff" style="background: #00ffff;"></button>
+          </div>
+        </div>
+
+        <div class="tool-section">
+          <h3>Stroke Width</h3>
+          <input type="range" id="stroke-width" min="1" max="50" value="3">
+          <span id="stroke-width-value">3px</span>
+        </div>
+
+        <div class="tool-section">
+          <h3>Actions</h3>
+          <button class="action-btn" id="undo-btn">Undo</button>
+          <button class="action-btn" id="redo-btn">Redo</button>
+          <button class="action-btn" id="clear-btn">Clear</button>
+        </div>
+      </aside>
+
+      <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+        <input type="file" id="image-input" accept="image/*" style="display: none;">
+      </div>
+
+      <aside class="users-panel">
+        <h3>Online Users (<span id="user-count">0</span>)</h3>
+        <div id="users-list"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Text Modal -->
+  <div id="text-input-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Enter Text</h3>
+      <input type="text" id="text-input" placeholder="Type your text here...">
+      <div class="modal-actions">
+        <button id="text-submit">Add Text</button>
+        <button id="text-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="canvas.js"></script>
+  <script src="websocket.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
